@@ -26,3 +26,18 @@ async def process_message_point_guard(message:Message, state:FSMContext):
     await bot.send_message(message.from_user.id,'Вы успешно ввели игрока на позиции PG')
     await state.update_data(point_guard=message.text)
     await state.clear()
+
+
+#Хэндлер для обработки нажатия кнопки с callback_data SG
+@router.callback_query(F.data == 'SG')
+async def process_shooting_guard(callback:CallbackQuery, state:FSMContext):
+    await callback.answer() #Убрали бесконечную загрузку на кнопке
+    await bot.send_message(callback.from_user.id, text='Введите имя и фамилию игрока, которого вы хотите поставить на позиции атакующего защитника')  
+    await state.set_state(TeamState.shooting_guard)
+
+#Хэндлер для обработки ввода пользователем shooting guard
+@router.message(TeamState.shooting_guard)
+async def process_message_shooting_guard(message:Message, state:FSMContext):
+    await bot.send_message(message.from_user.id,'Вы успешно ввели игрока на позиции SG')
+    await state.update_data(shooting_guard=message.text)
+    await state.clear()
