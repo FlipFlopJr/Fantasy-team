@@ -16,6 +16,10 @@ async def set_commands(bot: Bot):
         BotCommand(
             command='team',
             description='Собираем команду'
+        ),
+        BotCommand(
+            command='show_team',
+            description="Показываем состав команды"
         )
     ]
 

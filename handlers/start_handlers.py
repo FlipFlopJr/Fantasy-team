@@ -5,6 +5,7 @@ from lexicon.lexicon_ru import LEXICON_RU
 from aiogram.types import CallbackQuery, ReplyKeyboardRemove
 from keyboards.start_kb import start_keyboard, welcome_keyboard
 from config_data.dispatcher import bot
+from services.variables import users
 
 
 
@@ -26,6 +27,7 @@ async def remove_chat_buttons(chat_id: int,
 # Handler for command /start
 @router.message(CommandStart())
 async def process_start_command(message: Message):
+    users[message.from_user.id] = {}
     await bot.send_message(message.from_user.id, text=LEXICON_RU['/start'],reply_markup=start_keyboard)
 
     

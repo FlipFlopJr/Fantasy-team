@@ -22,6 +22,17 @@ class Parser:
                 first_name = personInfo['PersonFirstNameRu']
                 last_name = personInfo['PersonLastNameRu']
                 position = personInfo['Players'][0]['PlayerPosition']
+
+                assists = personInfo['Assist']
+                blocks = personInfo['Blocks']
+                rebound = personInfo['Rebound']
+                fouls = personInfo['Foul']
+                points = personInfo['Points']
+                steals = personInfo['Steal']
+                shots = personInfo['Shot23']
+                plus_minus = personInfo['PlusMinus']
+                turnovers = personInfo['Turnover']
+
                 position_word = ''
                 match position:
                     case 1:
@@ -35,7 +46,22 @@ class Parser:
                     case 5:
                         position_word = 'Центровой (C)'
 
-                self.players1[full_name] = {'first name':first_name,'last name':last_name,'team':team_name,'age':age,'birth date':birth_date,'position':position, 'position_word':position_word}
+                self.players1[full_name] = {'first name':first_name,
+                                            'last name':last_name,
+                                            'team':team_name,
+                                            'age':age,
+                                            'birth date':birth_date,
+                                            'position':position, 
+                                            'position_word':position_word,
+                                            'assists':assists,
+                                            'blocks':blocks,
+                                            'rebounds':rebound,
+                                            'fouls':fouls,
+                                            'points':points,
+                                            'steals':steals,
+                                            'shots':shots,
+                                            'plus_minus':plus_minus,
+                                            'turnovers':turnovers}
         
         return self.players1
     

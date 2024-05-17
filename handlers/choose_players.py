@@ -9,6 +9,7 @@ from fsm.comand import TeamState
 from difflib import SequenceMatcher
 from services.functions import find_player_by_name
 from services.parser import Parser
+from services.variables import users
 
 
 
@@ -32,8 +33,12 @@ async def process_message_point_guard(message:Message, state:FSMContext):
     #Функция обработки наиболее подходящего игрокаЮ даже если в написании были ошибки
     closet_match, max_similarity = find_player_by_name(message.text,players)
     await bot.send_message(message.from_user.id,f'Вы успешно выбрали {closet_match} позиции PG')
-    await state.update_data(point_guard=message.text)
+
+    await state.update_data(point_guard=closet_match)
+    users[message.from_user.id]['point_guard'] = closet_match
+
     await state.clear()
+
 
 
 #Хэндлер для обработки нажатия кнопки с callback_data SG
@@ -48,8 +53,10 @@ async def process_shooting_guard(callback:CallbackQuery, state:FSMContext):
 async def process_message_shooting_guard(message:Message, state:FSMContext):
     closet_match, max_similarity = find_player_by_name(message.text,players)
     await bot.send_message(message.from_user.id,f'Вы успешно выбрали {closet_match} позиции SG')
-    # await bot.send_message(message.from_user.id,'Вы успешно ввели игрока на позиции SG')
-    await state.update_data(shooting_guard=message.text)
+
+    await state.update_data(shooting_guard=closet_match)
+    users[message.from_user.id]['shooting_guard'] = closet_match
+
     await state.clear()
 
 
@@ -65,8 +72,10 @@ async def process_small_forward(callback:CallbackQuery, state:FSMContext):
 async def process_message_small_forward(message:Message, state:FSMContext):
     closet_match, max_similarity = find_player_by_name(message.text,players)
     await bot.send_message(message.from_user.id,f'Вы успешно выбрали {closet_match} позиции SF')
-    # await bot.send_message(message.from_user.id,'Вы успешно ввели игрока на позиции SF')
-    await state.update_data(small_forward=message.text)
+
+    await state.update_data(small_forward=closet_match)
+    users[message.from_user.id]['small_forward'] = closet_match
+
     await state.clear()
 
 
@@ -82,8 +91,10 @@ async def process_power_forward(callback:CallbackQuery, state:FSMContext):
 async def process_message_power_forward(message:Message, state:FSMContext):
     closet_match, max_similarity = find_player_by_name(message.text,players)
     await bot.send_message(message.from_user.id,f'Вы успешно выбрали {closet_match} позиции PF')
-    # await bot.send_message(message.from_user.id,'Вы успешно ввели игрока на позиции PF')
-    await state.update_data(small_forward=message.text)
+
+    await state.update_data(power_forward=closet_match)
+    users[message.from_user.id]['power_forward'] = closet_match
+    
     await state.clear()
 
 
@@ -99,6 +110,8 @@ async def process_center(callback:CallbackQuery, state:FSMContext):
 async def process_message_center(message:Message, state:FSMContext):
     closet_match, max_similarity = find_player_by_name(message.text,players)
     await bot.send_message(message.from_user.id,f'Вы успешно выбрали {closet_match} позиции C')
-    # await bot.send_message(message.from_user.id,'Вы успешно ввели игрока на позиции PF')
-    await state.update_data(center=message.text)
+
+    await state.update_data(center=closet_match)
+    users[message.from_user.id]['center'] = closet_match
+    
     await state.clear()
